@@ -1,4 +1,4 @@
-import { BlogDetails } from "@/consts/data";
+import { BlogDetails } from "prisma/data";
 
 function RelatedArticles({ id }: { id: number }) {
   return (
