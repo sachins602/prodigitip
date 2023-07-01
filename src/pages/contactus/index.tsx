@@ -1,17 +1,20 @@
+import { api } from "@/utils/api";
 import { ContactDetails } from "prisma/data";
 import React, { type FormEvent } from "react";
 
 function Contactus() {
+  const contact = api.contact.contact.useMutation();
+
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      subject: formData.get("sub"),
-      description: formData.get("description"),
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      subject: formData.get("sub") as string,
+      description: formData.get("description") as string,
     };
-    console.log(data);
+    contact.mutate({ ...data }, { onSuccess: (res) => console.log(res) });
   }
 
   return (
