@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { MeetingWindow } from "../meetingwindow";
 
 function Dashboard() {
   return (
@@ -63,6 +65,7 @@ function Dashboard() {
             >
               CONTACT US
             </Link>
+            <MeetingWindow />
           </div>
         </div>
       </section>
