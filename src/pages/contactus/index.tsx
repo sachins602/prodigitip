@@ -1,8 +1,10 @@
+import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
 import { ContactDetails } from "prisma/data";
 import React, { type FormEvent } from "react";
 
 function Contactus() {
+  const { toast } = useToast();
   const contact = api.contact.contact.useMutation();
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -16,7 +18,20 @@ function Contactus() {
     };
     contact.mutate(
       { ...data },
-      { onSuccess: (res) => console.log(res.contactSaved) }
+      {
+        onSuccess: (res) => {
+          toast({
+            title: "Your query has been submitted successfully",
+            description: "We will get back to you soon",
+          });
+        },
+        onError: (err) =>
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: "Please try again later",
+          }),
+      }
     );
   }
 
@@ -111,6 +126,7 @@ function Contactus() {
                   Full Name
                 </label>
                 <input
+                  required
                   type="name"
                   name="name"
                   id="name"
@@ -123,6 +139,7 @@ function Contactus() {
                   Email
                 </label>
                 <input
+                  required
                   type="email"
                   name="email"
                   id="email"
@@ -135,6 +152,7 @@ function Contactus() {
                   Subject
                 </label>
                 <input
+                  required
                   type="text"
                   name="sub"
                   id="sub"
@@ -147,6 +165,7 @@ function Contactus() {
                   Description
                 </label>
                 <input
+                  required
                   type="text"
                   name="description"
                   id="description"
