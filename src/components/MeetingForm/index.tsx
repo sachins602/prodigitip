@@ -18,9 +18,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/utils/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import { api } from "@/utils/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
-  fullname: z.string().min(2, {
+  name: z.string().min(2, {
     message: "Full Name must be at least 2 characters.",
   }),
   date: z.date().min(new Date(), {
@@ -45,13 +47,19 @@ function wrapAsyncFunction<ARGS extends unknown[]>(
   };
 }
 
-export function ProfileForm() {
+export function ProfileForm({ onSuccess }: { onSuccess: () => void }) {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
+  const meeting = api.meeting.meeting.useMutation();
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      fullname: "",
+      name: "",
+      date: new Date(),
+      email: "",
+      phone: "",
+      message: "",
     },
   });
 
@@ -59,7 +67,24 @@ export function ProfileForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
+    meeting.mutate(
+      { ...values },
+      {
+        onSuccess: (res) => {
+          onSuccess();
+          toast({
+            title: "Meeting set Sucessfully",
+            description: "We will get back with confirmation soon!",
+          });
+        },
+        onError: (err) =>
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: "Please try again later",
+          }),
+      }
+    );
   }
   return (
     <Form {...form}>
@@ -69,12 +94,12 @@ export function ProfileForm() {
       >
         <FormField
           control={form.control}
-          name="fullname"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>FullName</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Jhon Doe" {...field} />
               </FormControl>
 
               <FormDescription>Please enter your full name.</FormDescription>
@@ -133,7 +158,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="example@email.com" {...field} />
               </FormControl>
 
               <FormDescription>Please enter your email.</FormDescription>
@@ -148,7 +173,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="+01 9876543210" {...field} />
               </FormControl>
 
               <FormDescription>Please enter your phone number.</FormDescription>
@@ -163,7 +188,7 @@ export function ProfileForm() {
             <FormItem>
               <FormLabel>Message</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="hello!" {...field} />
               </FormControl>
 
               <FormDescription>Please enter your message.</FormDescription>
