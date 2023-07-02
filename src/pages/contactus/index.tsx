@@ -14,7 +14,10 @@ function Contactus() {
       subject: formData.get("sub") as string,
       description: formData.get("description") as string,
     };
-    contact.mutate({ ...data }, { onSuccess: (res) => console.log(res) });
+    contact.mutate(
+      { ...data },
+      { onSuccess: (res) => console.log(res.contactSaved) }
+    );
   }
 
   return (
