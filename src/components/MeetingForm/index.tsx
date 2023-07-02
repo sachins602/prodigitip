@@ -26,6 +26,15 @@ const formSchema = z.object({
   date: z.date().min(new Date(), {
     message: "Date must be in the future.",
   }),
+  email: z.string().email({
+    message: "Must be a vaild email",
+  }),
+  phone: z.string().min(10, {
+    message: "Phone number must be at least 10 characters.",
+  }),
+  message: z.string().min(3, {
+    message: "Description must be at least 10 characters.",
+  }),
 });
 
 function wrapAsyncFunction<ARGS extends unknown[]>(
@@ -56,7 +65,7 @@ export function ProfileForm() {
     <Form {...form}>
       <form
         onSubmit={wrapAsyncFunction(form.handleSubmit(onSubmit))}
-        className="space-y-8"
+        className="space-y-4 p-2"
       >
         <FormField
           control={form.control}
@@ -113,6 +122,51 @@ export function ProfileForm() {
                 </PopoverContent>
               </Popover>
               <FormDescription>Choose a date you want to meet.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+
+              <FormDescription>Please enter your email.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+
+              <FormDescription>Please enter your phone number.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="message"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Message</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+
+              <FormDescription>Please enter your message.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
