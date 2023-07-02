@@ -16,28 +16,51 @@ datasource db {
 }
 
 model Example {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }
 
 model Contact {
-    id        String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    name      String
-    email     String
-    subject   String
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    name        String
+    email       String
+    subject     String
     description String
 }
 
 model Meeting {
-    id       String   @id @default(cuid())
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    name     String
-    date     DateTime
-    email    String
-    phone    String
-    message  String
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    name        String
+    date        DateTime
+    email       String
+    phone       String
+    message     String
+}
+
+model Blog {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  author        String
+  authorTitle   String
+  publishedOn   String
+  authorImage   String
+  title         String
+  paragraph1    String
+  image1        String
+  paragraph2    String
+  paragraph3    String
+  paragraph4    String
+  paragraph5    String
+  image2        String
+  paragraph6    String
+  paragraph7    String
+  paragraph8    String
+  image3        String
+  paragraph9    String
 }
