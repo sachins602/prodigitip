@@ -12,7 +12,7 @@ export function MeetingWindow() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline">Setup a meeting!</Button>
+        <Button>Setup a meeting!</Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-2">
         <ProfileForm onSuccess={() => setOpen(false)} />
