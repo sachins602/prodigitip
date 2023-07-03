@@ -1,25 +1,57 @@
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
+import { wrapAsyncFunction } from "@/utils/promise-helper";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactDetails } from "prisma/data";
-import React, { type FormEvent } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  name: z.string().min(2, {
+    message: "Full Name must be at least 2 characters.",
+  }),
+  email: z.string().email({
+    message: "Must be a vaild email",
+  }),
+  subject: z.string().min(3, {
+    message: "Subject must be at least 10 characters.",
+  }),
+  description: z.string().min(3, {
+    message: "Description must be at least 10 characters.",
+  }),
+});
 
 function Contactus() {
   const { toast } = useToast();
   const contact = api.contact.contact.useMutation();
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      subject: formData.get("sub") as string,
-      description: formData.get("description") as string,
-    };
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      description: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>): void {
     contact.mutate(
-      { ...data },
+      { ...values },
       {
         onSuccess: (res) => {
+          form.reset();
           toast({
             title: "Your query has been submitted successfully",
             description: "We will get back to you soon",
@@ -117,69 +149,82 @@ function Contactus() {
                 </div>
               </div>
             </div>
-            <form
-              className="flex flex-col justify-center p-6"
-              onSubmit={handleSubmit}
-            >
-              <div className="flex flex-col">
-                <label htmlFor="name" className="hidden">
-                  Full Name
-                </label>
-                <input
-                  required
-                  type="name"
-                  name="name"
-                  id="name"
-                  placeholder="Full Name"
-                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                />
-              </div>
-              <div className="mt-2 flex flex-col">
-                <label htmlFor="email" className="hidden">
-                  Email
-                </label>
-                <input
-                  required
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="Email"
-                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                />
-              </div>
-              <div className="mt-2 flex flex-col">
-                <label htmlFor="sub" className="hidden">
-                  Subject
-                </label>
-                <input
-                  required
-                  type="text"
-                  name="sub"
-                  id="sub"
-                  placeholder="Subject"
-                  className="w-100 mt-2 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                />
-              </div>
-              <div className="mt-2 flex flex-col">
-                <label htmlFor="description" className="hidden">
-                  Description
-                </label>
-                <input
-                  required
-                  type="text"
-                  name="description"
-                  id="description"
-                  placeholder="Description"
-                  className="w-100 mt-2 h-36 rounded-lg border border-gray-400 bg-white px-3 py-3 font-semibold text-gray-800 focus:border-indigo-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                />
-              </div>
-              <button
-                type="submit"
-                className="hover:bg-blue-dark mt-3 rounded-lg bg-indigo-600 px-6 py-3 font-bold text-white transition duration-300 ease-in-out hover:bg-indigo-500 md:w-32"
+            <Form {...form}>
+              <form
+                className="flex flex-col justify-center p-6"
+                onSubmit={wrapAsyncFunction(form.handleSubmit(onSubmit))}
               >
-                Submit
-              </button>
-            </form>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Full Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Jhon Doe" {...field} />
+                      </FormControl>
+
+                      <FormDescription>
+                        Please enter your full name.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="example@email.com" {...field} />
+                      </FormControl>
+
+                      <FormDescription>
+                        Please enter your email.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Subject</FormLabel>
+                      <FormControl>
+                        <Input placeholder="hello!" {...field} />
+                      </FormControl>
+
+                      <FormDescription>
+                        Please enter your subject.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <Input placeholder="hello!" {...field} />
+                      </FormControl>
+
+                      <FormDescription>
+                        Please enter your Description.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Submit</Button>
+              </form>
+            </Form>
           </div>
         </div>
       </div>

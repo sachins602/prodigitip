@@ -20,6 +20,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
+import { wrapAsyncFunction } from "@/utils/promise-helper";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -38,14 +39,6 @@ const formSchema = z.object({
     message: "Description must be at least 10 characters.",
   }),
 });
-
-function wrapAsyncFunction<ARGS extends unknown[]>(
-  fn: (...args: ARGS) => Promise<unknown>
-): (...args: ARGS) => void {
-  return (...args) => {
-    void fn(...args);
-  };
-}
 
 export function ProfileForm({ onSuccess }: { onSuccess: () => void }) {
   const [open, setOpen] = useState(false);
