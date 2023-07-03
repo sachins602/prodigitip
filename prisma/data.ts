@@ -43,7 +43,6 @@ export const ContactDetails = {
 
 export const BlogDetails = [
   {
-    id: 0,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -75,7 +74,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 1,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -107,7 +105,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 2,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -139,7 +136,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 3,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -171,7 +167,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 4,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -203,7 +198,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 5,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -235,7 +229,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 6,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
@@ -267,7 +260,6 @@ export const BlogDetails = [
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
   },
   {
-    id: 7,
     author: "John Ddfa",
     authorTitle: "CEO",
     publishedOn: "2020-10-10",
