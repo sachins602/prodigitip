@@ -1,10 +1,13 @@
 import RelatedArticles from "@/components/relatedArticles";
-import findBlog from "@/utils/findBlog";
+import { api } from "@/utils/api";
 import { useRouter } from "next/router";
 
 function Blog() {
   const id = useRouter().query.id;
-  const data = findBlog(id);
+  const blog = api.blogs.id.useQuery({
+    id: id as string,
+  });
+
   return (
     <>
       <main className="bg-white pb-16 pt-8 text-black dark:bg-gray-900 dark:text-white lg:pb-24 lg:pt-16">
@@ -20,17 +23,17 @@ function Blog() {
                   />
                   <div>
                     <a href="#" rel="author" className="text-xl font-bold">
-                      {data?.author}
+                      {blog.data?.author}
                     </a>
                     <p className="text-base font-light text-gray-500 dark:text-gray-400">
-                      {data?.authorTitle}
+                      {blog.data?.authorTitle}
                     </p>
                     <p className="text-base font-light text-gray-500 dark:text-gray-400">
                       <time
-                        dateTime={data?.publishedOn}
-                        title={data?.publishedOn}
+                        dateTime={blog.data?.publishedOn}
+                        title={blog.data?.publishedOn}
                       >
-                        {data?.publishedOn}
+                        {blog.data?.publishedOn}
                       </time>
                     </p>
                   </div>
@@ -40,30 +43,30 @@ function Blog() {
                 Best practices for successful prototypes
               </h1>
             </header>
-            <p>{data?.paragraph1}</p>
+            <p>{blog.data?.paragraph1}</p>
             <img
-              src={data?.image1}
+              src={blog.data?.image1}
               alt="Best practices for successful prototypes"
               className="mb-6 w-full rounded-lg shadow-lg"
             />
-            <p>{data?.paragraph2}</p>
-            <p>{data?.paragraph3}</p>
-            <p>{data?.paragraph4}</p>
-            <p>{data?.paragraph5}</p>
+            <p>{blog.data?.paragraph2}</p>
+            <p>{blog.data?.paragraph3}</p>
+            <p>{blog.data?.paragraph4}</p>
+            <p>{blog.data?.paragraph5}</p>
             <img
-              src={data?.image2}
+              src={blog.data?.image2}
               alt="Best practices for successful prototypes"
               className="mb-6 w-full rounded-lg shadow-lg"
             />
-            <p>{data?.paragraph6}</p>
-            <p>{data?.paragraph7}</p>
-            <p>{data?.paragraph8}</p>
+            <p>{blog.data?.paragraph6}</p>
+            <p>{blog.data?.paragraph7}</p>
+            <p>{blog.data?.paragraph8}</p>
             <img
-              src={data?.image3}
+              src={blog.data?.image3}
               alt="Best practices for successful prototypes"
               className="mb-6 w-full rounded-lg shadow-lg"
             />
-            <p>{data?.paragraph9}</p>
+            <p>{blog.data?.paragraph9}</p>
 
             <section className="not-format">
               <div className="mb-6 flex items-center justify-between">
