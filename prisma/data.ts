@@ -1,4 +1,4 @@
-export const NavItems = ["Home", "Services", "Blogs", "Contact Us", "About Us"];
+export const NavItems = ["home", "services", "blogs", "contactus", "aboutus"];
 
 export const ServiceItems = [
   {

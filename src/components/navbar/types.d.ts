@@ -1,6 +1,6 @@
 export type NavItemType =
-  | "Home"
-  | "Services"
-  | "Blogs"
-  | "Contact Us"
-  | "About Us";
+  | "home"
+  | "services"
+  | "blogs"
+  | "contactus"
+  | "aboutus";

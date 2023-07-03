@@ -4,10 +4,14 @@ import { useState } from "react";
 import { type NavItemType } from "./types";
 import { NavItems } from "prisma/data";
 import { ThemeToggle } from "../ThemeToggle";
-
+import { usePathname } from "next/navigation";
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedTab, setSelectedTab] = useState<NavItemType>("Home");
+  const pathname = usePathname().slice(1);
+  const formattedPathname =
+    pathname === "" ? "home" : (pathname as NavItemType);
+  const [selectedTab, setSelectedTab] =
+    useState<NavItemType>(formattedPathname);
 
   return (
     <nav className="left-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900">
@@ -75,7 +79,7 @@ function NavBar() {
                     setIsOpen(!isOpen);
                   }}
                   href={
-                    item === "Home"
+                    item === "home"
                       ? "/"
                       : `/${item.replace(/\s/g, "").toLowerCase()}`
                   }
@@ -86,7 +90,7 @@ function NavBar() {
                   md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                   aria-current="page"
                 >
-                  {item}
+                  {item.toLocaleUpperCase()}
                 </Link>
               </li>
             ))}
