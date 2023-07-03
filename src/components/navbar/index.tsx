@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type NavItemType } from "./types";
 import { NavItems } from "prisma/data";
 import { ThemeToggle } from "../ThemeToggle";
@@ -8,12 +8,21 @@ import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const pathname = usePathname().slice(1);
-  const formattedPathname =
-    pathname === "" ? "home" : (pathname as NavItemType);
-  const [selectedTab, setSelectedTab] =
-    useState<NavItemType>(formattedPathname);
+  const pathname = usePathname();
 
+  const [selectedTab, setSelectedTab] = useState<NavItemType>("home");
+
+  useEffect(() => {
+    if (pathname) {
+      setSelectedTab(
+        pathname === "/"
+          ? "home"
+          : pathname.slice(1, 6) === "blogs"
+          ? "blogs"
+          : (pathname.slice(1) as NavItemType)
+      );
+    }
+  }, [pathname]);
   return (
     <nav className="left-0 top-0 z-20 w-full border-b border-gray-200 bg-white dark:border-gray-600 dark:bg-gray-900">
       <div className="flex w-full flex-row items-center justify-between gap-4 px-8 py-4 lg:flex-wrap">
