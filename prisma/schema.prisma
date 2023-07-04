@@ -64,3 +64,10 @@ model Blog {
   image3        String
   paragraph9    String
 }
+
+model NewsLetterSubscriber {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  email         String
+}
