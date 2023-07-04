@@ -1,6 +1,7 @@
-import { BlogDetails } from "prisma/data";
+import { api } from "@/utils/api";
 
-function RelatedArticles({ id }: { id: number }) {
+function RelatedArticles() {
+  const relatedBlogs = api.blogs.getRelatedBlogs.useQuery();
   return (
     <aside
       aria-label="Related articles"
@@ -9,32 +10,33 @@ function RelatedArticles({ id }: { id: number }) {
       <div className="mx-auto max-w-screen-xl px-4">
         <h2 className="mb-8 text-2xl font-bold">Related articles</h2>
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-          {BlogDetails.slice(0, 4).map((item, i) => (
-            <article
-              className="max-w-xs"
-              key={`${item.author}${i}${item.title}`}
-            >
-              <a href="#">
-                <img
-                  src={item.image1}
-                  className="mb-5 rounded-lg"
-                  alt="Image 1"
-                />
-              </a>
-              <h2 className="mb-2 text-xl font-bold leading-tight">
-                <a href="#">{item.title}</a>
-              </h2>
-              <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
-                {item.paragraph1}
-              </p>
-              <a
-                href="#"
-                className="text-primary-600 dark:text-primary-500 inline-flex items-center font-medium underline underline-offset-4 hover:no-underline"
+          {relatedBlogs.data &&
+            relatedBlogs.data.map((item, i) => (
+              <article
+                className="max-w-xs"
+                key={`${item.author}${i}${item.title}`}
               >
-                Read in 2 minutes
-              </a>
-            </article>
-          ))}
+                <a href="#">
+                  <img
+                    src={item.image1}
+                    className="mb-5 rounded-lg"
+                    alt="Image 1"
+                  />
+                </a>
+                <h2 className="mb-2 text-xl font-bold leading-tight">
+                  <a href="#">{item.title}</a>
+                </h2>
+                <p className="mb-4 font-light text-gray-500 dark:text-gray-400">
+                  {item.paragraph1}
+                </p>
+                <a
+                  href="#"
+                  className="text-primary-600 dark:text-primary-500 inline-flex items-center font-medium underline underline-offset-4 hover:no-underline"
+                >
+                  Read in 2 minutes
+                </a>
+              </article>
+            ))}
         </div>
       </div>
     </aside>

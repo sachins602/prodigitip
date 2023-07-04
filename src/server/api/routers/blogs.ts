@@ -20,6 +20,12 @@ export const blogRouter = createTRPCRouter({
     return ctx.prisma.blog.findMany();
   }),
 
+  getRelatedBlogs: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.blog.findMany({
+      take: 4,
+    });
+  }),
+
   getSecretMessage: protectedProcedure.query(() => {
     return "you can now see this secret message!";
   }),
