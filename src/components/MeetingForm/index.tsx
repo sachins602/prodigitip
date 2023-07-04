@@ -1,6 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -10,17 +7,20 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import * as z from "zod";
+import { useState } from "react";
+import { format } from "date-fns";
+import { api } from "@/utils/api";
+import { cn } from "@/utils/utils";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useForm } from "react-hook-form";
 import { Calendar } from "../ui/calendar";
-import { useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { cn } from "@/utils/utils";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { api } from "@/utils/api";
 import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -63,14 +63,14 @@ export function ProfileForm({ onSuccess }: { onSuccess: () => void }) {
     meeting.mutate(
       { ...values },
       {
-        onSuccess: (res) => {
+        onSuccess: () => {
           onSuccess();
           toast({
             title: "Meeting set Sucessfully",
             description: "We will get back with confirmation soon!",
           });
         },
-        onError: (err) =>
+        onError: () =>
           toast({
             variant: "destructive",
             title: "Something went wrong",

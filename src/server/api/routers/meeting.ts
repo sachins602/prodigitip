@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import nodemailer from "nodemailer";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+
 import { env } from "@/env.mjs";
 
 export const meetingRouter = createTRPCRouter({

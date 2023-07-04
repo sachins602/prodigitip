@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -8,14 +8,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
-import { wrapAsyncFunction } from "@/utils/promise-helper";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactDetails } from "prisma/data";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { wrapAsyncFunction } from "@/utils/promise-helper";
+
+import { ContactDetails } from "prisma/data";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -50,14 +51,14 @@ function Contactus() {
     contact.mutate(
       { ...values },
       {
-        onSuccess: (res) => {
+        onSuccess: () => {
           form.reset();
           toast({
             title: "Your query has been submitted successfully",
             description: "We will get back to you soon",
           });
         },
-        onError: (err) =>
+        onError: () =>
           toast({
             variant: "destructive",
             title: "Something went wrong",

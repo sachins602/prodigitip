@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { ServiceItems } from "prisma/data";
-import React from "react";
 
 function Services() {
   return (

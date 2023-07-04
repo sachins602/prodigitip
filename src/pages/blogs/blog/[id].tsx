@@ -1,23 +1,21 @@
-import RelatedArticles from "@/components/relatedArticles";
-import { Button } from "@/components/ui/button";
+import { z } from "zod";
+import Link from "next/link";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
 import { api } from "@/utils/api";
-import { wrapAsyncFunction } from "@/utils/promise-helper";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import RelatedArticles from "@/components/relatedArticles";
+import { wrapAsyncFunction } from "@/utils/promise-helper";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -43,14 +41,14 @@ function Blog() {
 
   function onSubmit(values: z.infer<typeof formSchema>): void {
     subscribeNewsLetter.mutate(values,{
-        onSuccess: (res) => {
+        onSuccess: () => {
           form.reset();
           toast({
             title: "Your have subscribed to our newsletter",
             description: "Look forward to our emails",
           });
         },
-        onError: (err) =>
+        onError: () =>
           toast({
             variant: "destructive",
             title: "Something went wrong",
@@ -359,8 +357,8 @@ function Blog() {
                     </p>
                   </div>
                   <button
-                    id="dropdownComment3Button"
-                    data-dropdown-toggle="dropdownComment3"
+                    id="dropdownCommenButton"
+                    data-dropdown-toggle="dropdownCommen"
                     className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                     type="button"
                   >
@@ -377,7 +375,7 @@ function Blog() {
                   </button>
                   {/* Dropdown menu */}
                   <div
-                    id="dropdownComment3"
+                    id="dropdownCommen"
                     className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
                   >
                     <ul

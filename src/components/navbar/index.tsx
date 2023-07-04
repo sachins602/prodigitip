@@ -1,11 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { type NavItemType } from "./types";
+import { Button } from "../ui/button";
 import { NavItems } from "prisma/data";
+import { useEffect, useState } from "react";
 import { ThemeToggle } from "../ThemeToggle";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
+
+import { type NavItemType } from "./types";
+
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();

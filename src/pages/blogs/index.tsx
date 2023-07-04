@@ -1,6 +1,5 @@
-import { api } from "@/utils/api";
 import Link from "next/link";
-import React from "react";
+import { api } from "@/utils/api";
 
 function Blogs() {
   const blogs = api.blogs.getAll.useQuery();

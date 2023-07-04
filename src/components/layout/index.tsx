@@ -1,7 +1,7 @@
 import NavBar from "../navbar";
 import Footer from "../footer";
-import { ThemeProvider } from "../ThemeProvider/theme-provider";
 import { Toaster } from "../ui/toaster";
+import { ThemeProvider } from "../ThemeProvider/theme-provider";
 
 function Layout({ children }: { children: JSX.Element }): JSX.Element {
   return (

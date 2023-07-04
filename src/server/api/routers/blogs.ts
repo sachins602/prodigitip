@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
   createTRPCRouter,
   publicProcedure,
-  protectedProcedure,
 } from "@/server/api/trpc";
 
 export const blogRouter = createTRPCRouter({
@@ -24,9 +23,5 @@ export const blogRouter = createTRPCRouter({
     return ctx.prisma.blog.findMany({
       take: 4,
     });
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
   }),
 });
