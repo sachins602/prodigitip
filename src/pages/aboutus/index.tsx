@@ -10,7 +10,7 @@ function Aboutus() {
             src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
             className="w-full rounded-t-lg align-middle"
           />
-          <blockquote className="relative mb-4 p-8">
+          <div className="relative mb-4 p-8">
             <h4 className="text-xl font-bold text-white">
               AI-based digital Marketing Agency:
             </h4>
@@ -21,7 +21,7 @@ function Aboutus() {
               digital marketing strategies and best practice techniques, we
               enable your brand and business to reach the optimum.
             </p>
-          </blockquote>
+          </div>
           <Link className="mx-auto" href="mailto:support@prodigitips.com">
             <button
               type="button"
