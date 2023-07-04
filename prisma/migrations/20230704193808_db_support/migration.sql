@@ -1,0 +1,16 @@
+-- AlterTable
+ALTER TABLE `blog` MODIFY `authorTitle` TEXT NOT NULL,
+    MODIFY `publishedOn` TEXT NOT NULL,
+    MODIFY `authorImage` TEXT NOT NULL,
+    MODIFY `paragraph1` TEXT NOT NULL,
+    MODIFY `image1` TEXT NOT NULL,
+    MODIFY `paragraph2` TEXT NOT NULL,
+    MODIFY `paragraph3` TEXT NOT NULL,
+    MODIFY `paragraph4` TEXT NOT NULL,
+    MODIFY `paragraph5` TEXT NOT NULL,
+    MODIFY `image2` TEXT NOT NULL,
+    MODIFY `paragraph6` TEXT NOT NULL,
+    MODIFY `paragraph7` TEXT NOT NULL,
+    MODIFY `paragraph8` TEXT NOT NULL,
+    MODIFY `image3` TEXT NOT NULL,
+    MODIFY `paragraph9` TEXT NOT NULL;

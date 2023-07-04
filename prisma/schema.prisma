@@ -43,22 +43,22 @@ model Blog {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   author        String
-  authorTitle   String
-  publishedOn   String
-  authorImage   String
+  authorTitle   String    @db.Text
+  publishedOn   String    @db.Text
+  authorImage   String    @db.Text
   title         String
-  paragraph1    String
-  image1        String
-  paragraph2    String
-  paragraph3    String
-  paragraph4    String
-  paragraph5    String
-  image2        String
-  paragraph6    String
-  paragraph7    String
-  paragraph8    String
-  image3        String
-  paragraph9    String
+  paragraph1    String    @db.Text
+  image1        String    @db.Text
+  paragraph2    String    @db.Text
+  paragraph3    String    @db.Text
+  paragraph4    String    @db.Text
+  paragraph5    String    @db.Text
+  image2        String    @db.Text
+  paragraph6    String    @db.Text
+  paragraph7    String    @db.Text
+  paragraph8    String    @db.Text
+  image3        String    @db.Text
+  paragraph9    String    @db.Text
 }
 
 model NewsLetterSubscriber {
