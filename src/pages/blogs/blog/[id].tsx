@@ -32,6 +32,8 @@ function Blog() {
     id: id as string,
   });
 
+  const subscribeNewsLetter = api.newsletter.save.useMutation()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,7 +42,22 @@ function Blog() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>): void {
-    console.log(values);
+    subscribeNewsLetter.mutate(values,{
+        onSuccess: (res) => {
+          form.reset();
+          toast({
+            title: "Your have subscribed to our newsletter",
+            description: "Look forward to our emails",
+          });
+        },
+        onError: (err) =>
+          toast({
+            variant: "destructive",
+            title: "Something went wrong",
+            description: "Please try again later",
+          }),
+      });
+    
   }
 
   return (
