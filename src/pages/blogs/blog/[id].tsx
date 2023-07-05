@@ -14,9 +14,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { SkeletonVariants } from "@/components/skeleton";
 import RelatedArticles from "@/components/relatedArticles";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
-import { SkeletonVariants } from "@/components/skeleton";
 
 const formSchema = z.object({
   email: z.string().email({

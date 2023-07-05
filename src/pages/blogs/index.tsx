@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { api } from "@/utils/api";
-import { Skeleton } from "@/components/ui/skeleton";
 import { SkeletonVariants } from "@/components/skeleton";
 
 function Blogs() {
