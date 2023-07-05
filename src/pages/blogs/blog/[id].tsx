@@ -3,8 +3,10 @@ import Link from "next/link";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { api } from "@/utils/api";
@@ -17,10 +19,23 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SkeletonVariants } from "@/components/skeleton";
 import RelatedArticles from "@/components/relatedArticles";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
+import { Textarea } from "@/components/ui/textarea";
 
-const formSchema = z.object({
+const newsLetterFormSchema = z.object({
   email: z.string().email({
     message: "Must be a vaild email",
+  }),
+});
+
+const commentFormSchema = z.object({
+  name: z.string().min(3, {
+    message: "Must be at least 3 characters",
+  }),
+  email: z.string().email({
+    message: "Must be a vaild email",
+  }),
+  comment: z.string().min(3, {
+    message: "Must be at least 3 characters",
   }),
 });
 
@@ -33,36 +48,49 @@ function Blog() {
 
   const subscribeNewsLetter = api.newsletter.save.useMutation()
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const newsLetterForm = useForm<z.infer<typeof newsLetterFormSchema>>({
+    resolver: zodResolver(newsLetterFormSchema),
     defaultValues: {
       email: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>): void {
-    subscribeNewsLetter.mutate(values,{
-        onSuccess: () => {
-          form.reset();
-          toast({
-            title: "Your have subscribed to our newsletter",
-            description: "Look forward to our emails",
-          });
-        },
-        onError: () =>
-          toast({
-            variant: "destructive",
-            title: "Something went wrong",
-            description: "Please try again later",
-          }),
-      });
-    
+  const commentForm = useForm<z.infer<typeof commentFormSchema>>({
+    resolver: zodResolver(commentFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      comment: "",
+    },
+  });
+
+
+  function onNewsLetterSubmit(values: z.infer<typeof newsLetterFormSchema>): void {
+    subscribeNewsLetter.mutate(values, {
+      onSuccess: () => {
+        newsLetterForm.reset();
+        toast({
+          title: "Your have subscribed to our newsletter",
+          description: "Look forward to our emails",
+        });
+      },
+      onError: () =>
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: "Please try again later",
+        }),
+    });
+  }
+
+  function onCommentSubmit(values: z.infer<typeof commentFormSchema>): void {
+    console.log(values);
   }
 
   return (
     <>
       <main className="bg-white pb-16 pt-8 text-black dark:bg-gray-900 dark:text-white lg:pb-24 lg:pt-16">
-       {blog.data ?  <div className="mx-auto flex max-w-screen-xl justify-between px-4 ">
+        {blog.data ? <div className="mx-auto flex max-w-screen-xl justify-between px-4 ">
           <article className="format format-sm sm:format-base lg:format-lg format-blue dark:format-invert mx-auto w-full max-w-2xl space-y-4">
             <header className="not-format mb-4 lg:mb-6">
               <address className="mb-6 flex items-center not-italic">
@@ -125,26 +153,64 @@ function Blog() {
                   Discussion (20)
                 </h2>
               </div>
-              <form className="mb-6">
-                <div className="mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800">
-                  <label htmlFor="comment" className="sr-only">
-                    Your comment
-                  </label>
-                  <textarea
-                    id="comment"
-                    rows={6}
-                    className="w-full border-0 px-0 text-sm text-gray-900 focus:ring-0 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
-                    placeholder="Write a comment..."
-                    defaultValue={""}
+              <Form {...commentForm}>
+                <form onSubmit={wrapAsyncFunction(commentForm.handleSubmit(onCommentSubmit))} className=" space-y-6">
+                  <FormField
+                    control={commentForm.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Jhon Doe" {...field} />
+                        </FormControl>
+
+                        <FormDescription>
+                          Please enter your full name.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
-                </div>
-                <button
-                  type="submit"
-                  className="bg-primary-700 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800 inline-flex items-center rounded-lg px-4 py-2.5 text-center text-xs font-medium text-white focus:ring-4"
-                >
-                  Post comment
-                </button>
-              </form>
+                  <FormField
+                    control={commentForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input placeholder="example@email.com" {...field} />
+                        </FormControl>
+
+                        <FormDescription>
+                          Please enter your email.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={commentForm.control}
+                    name="comment"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Comment</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="comment"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Leave your thoughts about this article!
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit">Post Comment</Button>
+                </form>
+              </Form>
               <article className="mb-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900">
                 <footer className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
@@ -539,8 +605,8 @@ function Blog() {
               </article>
             </section>
           </article>
-        </div>: 
-        <SkeletonVariants />}
+        </div> :
+          <SkeletonVariants />}
       </main>
       <RelatedArticles />
       <section className="w-full bg-white px-4 py-8 text-black dark:bg-gray-900 dark:text-white sm:text-center lg:px-6 lg:py-16">
@@ -551,13 +617,13 @@ function Blog() {
           Stay up to date with the roadmap progress, announcements and exclusive
           discounts feel free to sign up with your email.
         </p>
-        <Form {...form}>
+        <Form {...newsLetterForm}>
           <form
-            onSubmit={wrapAsyncFunction(form.handleSubmit(onSubmit))}
+            onSubmit={wrapAsyncFunction(newsLetterForm.handleSubmit(onNewsLetterSubmit))}
             className="flex w-full flex-row justify-center gap-4"
           >
             <FormField
-              control={form.control}
+              control={newsLetterForm.control}
               name="email"
               render={({ field }) => (
                 <FormItem className="w-72">
