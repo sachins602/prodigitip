@@ -7,6 +7,7 @@ export type ContactInput = {
 
 export type BlogType = {
   id: number;
+  blogIdentifier: string;
   author: string;
   authorTitle: string;
   publishedOn: string;

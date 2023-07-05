@@ -42,6 +42,7 @@ model Blog {
   id            String   @id @default(cuid())
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  blogIdentifier String  @unique
   author        String
   authorTitle   String    @db.Text
   publishedOn   String    @db.Text
@@ -59,6 +60,32 @@ model Blog {
   paragraph8    String    @db.Text
   image3        String    @db.Text
   paragraph9    String    @db.Text
+  comments      BlogComment[]
+}
+
+model BlogComment {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime? 
+  name          String
+  email         String
+  comment       String
+  replies      BlogCommentReply[]
+  blogId       Blog     @relation(fields: [id], references: [id])
+  @@index([id])
+}
+
+model BlogCommentReply {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime? 
+  name          String
+  email         String
+  comment       String
+  blogCommentId BlogComment     @relation(fields: [id], references: [id])
+  @@index([id])
 }
 
 model NewsLetterSubscriber {

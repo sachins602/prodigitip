@@ -5,9 +5,15 @@ const prisma = new PrismaClient();
 
 async function seed() {
   console.log("Seeding");
-  await prisma.blog.createMany({
-    data: BlogDetails,
-  });
+  await prisma.$transaction(
+    BlogDetails.map((blog) =>
+     prisma.blog.upsert({
+        where: { blogIdentifier: blog.blogIdentifier },
+        update: blog,
+        create: blog,
+     })
+    )
+  )
   console.log("Seeded");
 }
 seed()
