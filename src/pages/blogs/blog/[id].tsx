@@ -16,6 +16,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import RelatedArticles from "@/components/relatedArticles";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
+import { SkeletonVariants } from "@/components/skeleton";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -61,7 +62,7 @@ function Blog() {
   return (
     <>
       <main className="bg-white pb-16 pt-8 text-black dark:bg-gray-900 dark:text-white lg:pb-24 lg:pt-16">
-        <div className="mx-auto flex max-w-screen-xl justify-between px-4 ">
+       {blog.data ?  <div className="mx-auto flex max-w-screen-xl justify-between px-4 ">
           <article className="format format-sm sm:format-base lg:format-lg format-blue dark:format-invert mx-auto w-full max-w-2xl space-y-4">
             <header className="not-format mb-4 lg:mb-6">
               <address className="mb-6 flex items-center not-italic">
@@ -538,7 +539,8 @@ function Blog() {
               </article>
             </section>
           </article>
-        </div>
+        </div>: 
+        <SkeletonVariants />}
       </main>
       <RelatedArticles />
       <section className="w-full bg-white px-4 py-8 text-black dark:bg-gray-900 dark:text-white sm:text-center lg:px-6 lg:py-16">

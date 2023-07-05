@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { api } from "@/utils/api";
+import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonVariants } from "@/components/skeleton";
 
 function Blogs() {
   const blogs = api.blogs.getAll.useQuery();
 
   return (
     <div className="w-full space-y-6 bg-white p-4 text-black dark:bg-gray-900 dark:text-white">
-      {blogs.data &&
+      {blogs.data ? (
         blogs.data.map((blog, index) => (
           <div
             key={`blog-${index}+${blog.id}+${blog.author}`}
@@ -74,7 +76,10 @@ function Blogs() {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      ) : (
+        <SkeletonVariants />
+      )}
     </div>
   );
 }
