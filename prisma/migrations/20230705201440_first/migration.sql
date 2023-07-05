@@ -59,11 +59,13 @@ CREATE TABLE `BlogComment` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `deletedAt` DATETIME(3) NULL,
+    `blogId` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `comment` VARCHAR(191) NOT NULL,
 
     INDEX `BlogComment_id_idx`(`id`),
+    INDEX `BlogComment_blogId_idx`(`blogId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -73,11 +75,13 @@ CREATE TABLE `BlogCommentReply` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `deletedAt` DATETIME(3) NULL,
+    `blogCommentId` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `comment` VARCHAR(191) NOT NULL,
 
     INDEX `BlogCommentReply_id_idx`(`id`),
+    INDEX `BlogCommentReply_blogCommentId_idx`(`blogCommentId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

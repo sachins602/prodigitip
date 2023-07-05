@@ -46,7 +46,13 @@ function Blog() {
     id: id as string,
   });
 
+  const comments = api.comments.getAll.useQuery({
+    id: id as string,
+  });
+
   const subscribeNewsLetter = api.newsletter.save.useMutation()
+
+  const postComment = api.comments.postComment.useMutation()
 
   const newsLetterForm = useForm<z.infer<typeof newsLetterFormSchema>>({
     resolver: zodResolver(newsLetterFormSchema),
@@ -84,7 +90,24 @@ function Blog() {
   }
 
   function onCommentSubmit(values: z.infer<typeof commentFormSchema>): void {
-    console.log(values);
+    postComment.mutate({
+      ...values,
+      blogId: id as string,
+    }, {
+      onSuccess: () => {
+        commentForm.reset();
+        toast({
+          title: "Your comment has been posted",
+          description: "Thank you for your feedback",
+        });
+      },
+      onError: () =>
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: "Please try again later",
+        }),
+    });
   }
 
   return (
@@ -211,7 +234,106 @@ function Blog() {
                   <Button type="submit">Post Comment</Button>
                 </form>
               </Form>
-              <article className="mb-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900">
+              {comments.data ? comments.data.map((comment, i) => (
+                <article key={comment.id} className={`my-4 ${i > 0 ? 'border-t' : ''} border-gray-200 bg-white p-6 text-base dark:border-gray-700 dark:bg-gray-900`}>
+                  <footer className="mb-2 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <p className="mr-3 inline-flex items-center text-sm">
+                        <img
+                          className="mr-2 h-6 w-6 rounded-full"
+                          src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                          alt={comment.name}
+                        />
+                        {comment.name}
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <time dateTime="2022-03-12" title="March 12th, 2022">
+                          {String(comment.updatedAt)}
+                        </time>
+                      </p>
+                    </div>
+                    <button
+                      id="dropdownCommenButton"
+                      data-dropdown-toggle="dropdownCommen"
+                      className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                      type="button"
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                      </svg>
+                      <span className="sr-only">Comment settings</span>
+                    </button>
+                    {/* Dropdown menu */}
+                    <div
+                      id="dropdownCommen"
+                      className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
+                    >
+                      <ul
+                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                        aria-labelledby="dropdownMenuIconHorizontalButton"
+                      >
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          >
+                            Edit
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          >
+                            Remove
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                          >
+                            Report
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </footer>
+                  <p>
+                    {comment.comment}
+                  </p>
+                  <div className="mt-4 flex items-center space-x-4">
+                    <button
+                      type="button"
+                      className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className="mr-1 h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                        />
+                      </svg>
+                      Reply
+                    </button>
+                  </div>
+                </article>)) :
+                <SkeletonVariants />}
+              {/* <article className="mb-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900">
                 <footer className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
                     <p className="mr-3 inline-flex items-center text-sm">
@@ -245,7 +367,6 @@ function Blog() {
                     </svg>
                     <span className="sr-only">Comment settings</span>
                   </button>
-                  {/* Dropdown menu */}
                   <div
                     id="dropdownComment1"
                     className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
@@ -310,8 +431,8 @@ function Blog() {
                     Reply
                   </button>
                 </div>
-              </article>
-              <article className="mb-6 ml-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900 lg:ml-12">
+              </article> */}
+              {/* <article className="mb-6 ml-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900 lg:ml-12">
                 <footer className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
                     <p className="mr-3 inline-flex items-center text-sm">
@@ -345,7 +466,6 @@ function Blog() {
                     </svg>
                     <span className="sr-only">Comment settings</span>
                   </button>
-                  {/* Dropdown menu */}
                   <div
                     id="dropdownComment2"
                     className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
@@ -405,8 +525,8 @@ function Blog() {
                     Reply
                   </button>
                 </div>
-              </article>
-              <article className="mb-6 border-t border-gray-200 bg-white p-6 text-base dark:border-gray-700 dark:bg-gray-900">
+              </article> */}
+              {/* <article className="my-4 border-t border-gray-200 bg-white p-6 text-base dark:border-gray-700 dark:bg-gray-900">
                 <footer className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
                     <p className="mr-3 inline-flex items-center text-sm">
@@ -440,7 +560,6 @@ function Blog() {
                     </svg>
                     <span className="sr-only">Comment settings</span>
                   </button>
-                  {/* Dropdown menu */}
                   <div
                     id="dropdownCommen"
                     className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
@@ -504,8 +623,8 @@ function Blog() {
                     Reply
                   </button>
                 </div>
-              </article>
-              <article className="border-t border-gray-200 bg-white p-6 text-base dark:border-gray-700 dark:bg-gray-900">
+              </article> */}
+              {/* <article className="border-t border-gray-200 bg-white p-6 text-base dark:border-gray-700 dark:bg-gray-900">
                 <footer className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
                     <p className="mr-3 inline-flex items-center text-sm">
@@ -538,7 +657,6 @@ function Blog() {
                       <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
                     </svg>
                   </button>
-                  {/* Dropdown menu */}
                   <div
                     id="dropdownComment4"
                     className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
@@ -602,7 +720,7 @@ function Blog() {
                     Reply
                   </button>
                 </div>
-              </article>
+              </article> */}
             </section>
           </article>
         </div> :
