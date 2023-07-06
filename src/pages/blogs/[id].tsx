@@ -115,9 +115,10 @@ function Blog() {
   }
 
   function onCommentSubmit(values: z.infer<typeof commentFormSchema>): void {
+    if (!blog.data) return;
     postComment.mutate({
       ...values,
-      blogId: id as string,
+      blogId: blog.data.id,
     }, {
       onSuccess: () => {
         commentForm.reset();
@@ -187,7 +188,7 @@ function Blog() {
                 </div>
               </address>
               <h1 className="mb-4 text-3xl font-extrabold leading-tight lg:mb-6 lg:text-4xl">
-        {blog.data?.authorTitle}
+                {blog.data?.authorTitle}
               </h1>
             </header>
             <h2>{blog.data?.paragraph1}</h2>
