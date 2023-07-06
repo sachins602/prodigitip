@@ -121,6 +121,7 @@ function Blog() {
     }, {
       onSuccess: () => {
         commentForm.reset();
+        void comments.refetch();
         toast({
           title: "Your comment has been posted",
           description: "Thank you for your feedback",
@@ -139,6 +140,7 @@ function Blog() {
     postCommentReply.mutate(values, {
       onSuccess: () => {
         replyForm.reset();
+        void comments.refetch();
         toast({
           title: "Your comment has been posted",
           description: "Thank you for your feedback",
