@@ -76,7 +76,7 @@ export const BlogDetails = [
   },
   {
     blogIdentifier: "1",
-    author: "John Deo",
+    author: "Bhai Kiran Wagle",
     authorTitle: "Astronaut",
     publishedOn: "2020-10-10",
     authorImage: "/blog-1.png",
