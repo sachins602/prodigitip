@@ -38,6 +38,39 @@ export const commentRouter = createTRPCRouter({
       });
     }),
 
+    postCommentReply: publicProcedure
+    .input(z.object({ 
+      commentId: z.string(),
+      name: z.string(),
+      email: z.string().email(),
+      comment: z.string(),
+     }))
+    .mutation(async ({ input, ctx }) => {
+      const comment = await ctx.prisma.blogComment.findUnique({
+        where: {
+          id: input.commentId,
+        },
+        include: {
+          replies: true,
+        },
+      });
+      if (!comment) {
+        throw new Error("Comment not found");
+      }
+      return ctx.prisma.blogCommentReply.create({
+        data: {
+          name: input.name,
+          email: input.email,
+          comment: input.comment,
+          blogComment: {
+            connect: {
+            id: input.commentId,
+            },
+          }
+        },
+      });
+    }),
+
   getAll: publicProcedure
   .input(z.object({ id: z.string() }))
   .query(({input, ctx }) => {
@@ -45,6 +78,9 @@ export const commentRouter = createTRPCRouter({
       {
         where: {
          blog: input,
+        },
+        include: {
+          replies: true,
         },
       }
     );

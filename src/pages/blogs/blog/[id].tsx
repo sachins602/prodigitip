@@ -20,6 +20,7 @@ import { SkeletonVariants } from "@/components/skeleton";
 import RelatedArticles from "@/components/relatedArticles";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
 import { Textarea } from "@/components/ui/textarea";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const newsLetterFormSchema = z.object({
   email: z.string().email({
@@ -40,6 +41,7 @@ const commentFormSchema = z.object({
 });
 
 const replyFormSchema = z.object({
+  commentId: z.string(),
   name: z.string().min(3, {
     message: "Must be at least 3 characters",
   }),
@@ -65,6 +67,8 @@ function Blog() {
   const subscribeNewsLetter = api.newsletter.save.useMutation()
 
   const postComment = api.comments.postComment.useMutation()
+
+  const postCommentReply = api.comments.postCommentReply.useMutation()
 
   const newsLetterForm = useForm<z.infer<typeof newsLetterFormSchema>>({
     resolver: zodResolver(newsLetterFormSchema),
@@ -132,7 +136,21 @@ function Blog() {
   }
 
   function onReplySubmit(values: z.infer<typeof replyFormSchema>): void {
-    console.log(values);
+    postCommentReply.mutate(values, {
+      onSuccess: () => {
+        replyForm.reset();
+        toast({
+          title: "Your comment has been posted",
+          description: "Thank you for your feedback",
+        });
+      },
+      onError: () =>
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: "Please try again later",
+        }),
+    });
   }
 
   return (
@@ -198,7 +216,7 @@ function Blog() {
             <section className="not-format">
               <div className="mb-6 flex items-center justify-between">
                 <h2 className="text-lg font-bold lg:text-2xl">
-                  Discussion (20)
+                  Discussion ({comments.data?.length || 0})
                 </h2>
               </div>
               <Form {...commentForm}>
@@ -300,7 +318,7 @@ function Blog() {
                         id="dropdownCommen"
                         className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
                       >
-                        <ul
+                        {/* <ul
                           className="py-1 text-sm text-gray-700 dark:text-gray-200"
                           aria-labelledby="dropdownMenuIconHorizontalButton"
                         >
@@ -328,95 +346,101 @@ function Blog() {
                               Report
                             </a>
                           </li>
-                        </ul>
+                        </ul> */}
                       </div>
                     </footer>
                     <p>
                       {comment.comment}
                     </p>
                     <div className="mt-4 flex flex-col space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          className="mr-1 h-4 w-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                      <Form {...replyForm}>
-                        <form onSubmit={wrapAsyncFunction(replyForm.handleSubmit(onCommentSubmit))} className="space-y-3">
-                          <FormField
-                            control={replyForm.control}
-                            name="name"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Full Name</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="Jhon Doe" {...field} />
-                                </FormControl>
 
-                                <FormDescription>
-                                  Please enter your full name.
-                                </FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={replyForm.control}
-                            name="email"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="example@email.com" {...field} />
-                                </FormControl>
+                      <Accordion type="single" collapsible>
+                        <AccordionItem value="item-1">
+                          <AccordionTrigger>
+                            <div className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400">
+                              <svg
+                                aria-hidden="true"
+                                className="mr-1 h-4 w-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                                />
+                              </svg>
+                              Reply
+                            </div></AccordionTrigger>
+                          <AccordionContent>
+                            <Form {...replyForm}>
+                              <form onSubmit={wrapAsyncFunction(replyForm.handleSubmit(onReplySubmit))} className="space-y-3">
+                                <FormField
+                                  control={replyForm.control}
+                                  name="name"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Full Name</FormLabel>
+                                      <FormControl>
+                                        <Input placeholder="Jhon Doe" {...field} />
+                                      </FormControl>
 
-                                <FormDescription>
-                                  Please enter your email.
-                                </FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={replyForm.control}
-                            name="comment"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Comment</FormLabel>
-                                <FormControl>
-                                  <Textarea
-                                    placeholder="comment"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormDescription>
-                                  Leave your thoughts about this article!
-                                </FormDescription>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <Button type="submit">Post Reply</Button>
-                        </form>
-                      </Form>
+                                      <FormDescription>
+                                        Please enter your full name.
+                                      </FormDescription>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={replyForm.control}
+                                  name="email"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Email</FormLabel>
+                                      <FormControl>
+                                        <Input placeholder="example@email.com" {...field} />
+                                      </FormControl>
+
+                                      <FormDescription>
+                                        Please enter your email.
+                                      </FormDescription>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={replyForm.control}
+                                  name="comment"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Comment</FormLabel>
+                                      <FormControl>
+                                        <Textarea
+                                          placeholder="comment"
+                                          {...field}
+                                        />
+                                      </FormControl>
+                                      <FormDescription>
+                                        Leave your thoughts about this article!
+                                      </FormDescription>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <Button onClick={() => replyForm.setValue("commentId", comment.id)} type="submit">Post Reply</Button>
+                              </form>
+                            </Form>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                      </Accordion>
                     </div>
                   </article>
-                  {/* <article className="mb-6 ml-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900 lg:ml-12">
+                  {comment.replies && comment.replies.map((reply) => (<article key={reply.id} className="mb-6 ml-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900 lg:ml-12">
                     <footer className="mb-2 flex items-center justify-between">
                       <div className="flex items-center">
                         <p className="mr-3 inline-flex items-center text-sm">
@@ -425,11 +449,11 @@ function Blog() {
                             src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                             alt="Jese Leos"
                           />
-                          Jese Leos
+                          {reply.name}
                         </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">
                           <time dateTime="2022-02-12" title="February 12th, 2022">
-                            Feb. 12, 2022
+                            {String(reply.updatedAt)}
                           </time>
                         </p>
                       </div>
@@ -485,31 +509,8 @@ function Blog() {
                         </ul>
                       </div>
                     </footer>
-                    <p>Much appreciated! Glad you liked it ☺️</p>
-                    <div className="mt-4 flex items-center space-x-4">
-                      <button
-                        type="button"
-                        className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          className="mr-1 h-4 w-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                          />
-                        </svg>
-                        Reply
-                      </button>
-                    </div>
-                  </article> */}
+                    <p>{reply.comment}</p>
+                  </article>))}
                 </>)) :
                 <SkeletonVariants />}
             </section>

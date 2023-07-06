@@ -12,6 +12,9 @@ export const blogRouter = createTRPCRouter({
         where: {
           id: input.id,
         },
+        include:{
+          comments: true,
+        }
       });
     }),
 
