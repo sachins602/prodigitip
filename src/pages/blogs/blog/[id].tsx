@@ -14,12 +14,12 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SkeletonVariants } from "@/components/skeleton";
 import RelatedArticles from "@/components/relatedArticles";
 import { wrapAsyncFunction } from "@/utils/promise-helper";
-import { Textarea } from "@/components/ui/textarea";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const newsLetterFormSchema = z.object({
@@ -281,73 +281,20 @@ function Blog() {
                 <>
                   <article key={comment.id} className={`my-4 ${i > 0 ? 'border-t' : ''} border-gray-200 bg-white p-6 text-base dark:border-gray-700 dark:bg-gray-900`}>
                     <footer className="mb-2 flex items-center justify-between">
-                      <div className="flex items-center">
-                        <p className="mr-3 inline-flex items-center text-sm">
-                          <img
-                            className="mr-2 h-6 w-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                            alt={comment.name}
-                          />
-                          {comment.name}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          <time dateTime="2022-03-12" title="March 12th, 2022">
-                            {String(comment.updatedAt)}
-                          </time>
-                        </p>
-                      </div>
-                      <button
-                        id="dropdownCommenButton"
-                        data-dropdown-toggle="dropdownCommen"
-                        className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                        </svg>
-                        <span className="sr-only">Comment settings</span>
-                      </button>
-                      {/* Dropdown menu */}
-                      <div
-                        id="dropdownCommen"
-                        className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
-                      >
-                        {/* <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul> */}
-                      </div>
+                      <p className="mr-3 inline-flex items-center text-sm">
+                        <img
+                          className="mr-2 h-6 w-6 rounded-full"
+                          src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                          alt={comment.name}
+                        />
+                        {comment.name}
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <time dateTime="2022-03-12" title="March 12th, 2022">
+                          {comment.updatedAt.toLocaleString()}
+                        </time>
+                      </p>
+
                     </footer>
                     <p>
                       {comment.comment}
@@ -442,72 +389,20 @@ function Blog() {
                   </article>
                   {comment.replies && comment.replies.map((reply) => (<article key={reply.id} className="mb-6 ml-6 rounded-lg bg-white p-6 text-base dark:bg-gray-900 lg:ml-12">
                     <footer className="mb-2 flex items-center justify-between">
-                      <div className="flex items-center">
-                        <p className="mr-3 inline-flex items-center text-sm">
-                          <img
-                            className="mr-2 h-6 w-6 rounded-full"
-                            src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                            alt="Jese Leos"
-                          />
-                          {reply.name}
-                        </p>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">
-                          <time dateTime="2022-02-12" title="February 12th, 2022">
-                            {String(reply.updatedAt)}
-                          </time>
-                        </p>
-                      </div>
-                      <button
-                        id="dropdownComment2Button"
-                        data-dropdown-toggle="dropdownComment2"
-                        className="inline-flex items-center rounded-lg bg-white p-2 text-center text-sm font-medium text-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        type="button"
-                      >
-                        <svg
-                          className="h-5 w-5"
-                          aria-hidden="true"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"></path>
-                        </svg>
-                        <span className="sr-only">Comment settings</span>
-                      </button>
-                      <div
-                        id="dropdownComment2"
-                        className="z-10 hidden w-36 divide-y divide-gray-100 rounded bg-white shadow dark:divide-gray-600 dark:bg-gray-700"
-                      >
-                        <ul
-                          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-                          aria-labelledby="dropdownMenuIconHorizontalButton"
-                        >
-                          <li>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Edit
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Remove
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              href="#"
-                              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >
-                              Report
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
+                      <p className="mr-3 inline-flex items-center text-sm">
+                        <img
+                          className="mr-2 h-6 w-6 rounded-full"
+                          src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                          alt="Jese Leos"
+                        />
+                        {reply.name}
+                      </p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        <time dateTime="2022-02-12" title="February 12th, 2022">
+                          {reply.updatedAt.toLocaleString()}
+                        </time>
+                      </p>
+
                     </footer>
                     <p>{reply.comment}</p>
                   </article>))}
