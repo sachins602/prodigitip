@@ -61,7 +61,7 @@ function Blog() {
   });
 
   const comments = api.comments.getAll.useQuery({
-    id: id as string,
+    id: blog.data?.id as string,
   });
 
   const subscribeNewsLetter = api.newsletter.save.useMutation()
