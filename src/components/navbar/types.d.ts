@@ -2,5 +2,5 @@ export type NavItemType =
   | "home"
   | "services"
   | "blogs"
-  | "contactus"
-  | "aboutus";
+  | "contact-us"
+  | "about-us";

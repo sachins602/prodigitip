@@ -20,8 +20,8 @@ function NavBar() {
         pathname === "/"
           ? "home"
           : pathname.slice(1, 6) === "blogs"
-          ? "blogs"
-          : (pathname.slice(1) as NavItemType)
+            ? "blogs"
+            : (pathname.slice(1) as NavItemType)
       );
     }
   }, [pathname]);
@@ -68,9 +68,8 @@ function NavBar() {
           </button>
         </div>
         <div
-          className={`absolute right-4 top-14 z-20 items-center justify-between md:relative md:right-auto md:top-auto md:order-1 md:flex md:w-auto ${
-            isOpen ? "" : "hidden"
-          }`}
+          className={`absolute right-4 top-14 z-20 items-center justify-between md:relative md:right-auto md:top-auto md:order-1 md:flex md:w-auto ${isOpen ? "" : "hidden"
+            }`}
           id="navbar-sticky"
         >
           <ul
@@ -90,14 +89,13 @@ function NavBar() {
                       ? "/"
                       : `/${item.replace(/\s/g, "").toLowerCase()}`
                   }
-                  className={`block rounded py-2 pl-3 pr-4 text-gray-900 ${
-                    item === selectedTab ? "underline" : ""
-                  } hover:bg-gray-100 dark:border-gray-700 
+                  className={`block rounded py-2 pl-3 pr-4 text-gray-900 ${item === selectedTab ? "underline" : ""
+                    } hover:bg-gray-100 dark:border-gray-700 
                   dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent 
                   md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500`}
                   aria-current="page"
                 >
-                  {item.toLocaleUpperCase()}
+                  {item.split("-").join(" ").toLocaleUpperCase()}
                 </Link>
               </li>
             ))}
