@@ -45,6 +45,7 @@ model Blog {
   blogIdentifier String  @unique
   author        String
   authorTitle   String    @db.Text
+  blogRoute     String    @unique
   publishedOn   String    @db.Text
   authorImage   String    @db.Text
   title         String

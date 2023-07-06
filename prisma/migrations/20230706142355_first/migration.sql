@@ -33,6 +33,7 @@ CREATE TABLE `Blog` (
     `blogIdentifier` VARCHAR(191) NOT NULL,
     `author` VARCHAR(191) NOT NULL,
     `authorTitle` TEXT NOT NULL,
+    `blogRoute` VARCHAR(191) NOT NULL,
     `publishedOn` TEXT NOT NULL,
     `authorImage` TEXT NOT NULL,
     `title` VARCHAR(191) NOT NULL,
@@ -50,6 +51,7 @@ CREATE TABLE `Blog` (
     `paragraph9` TEXT NOT NULL,
 
     UNIQUE INDEX `Blog_blogIdentifier_key`(`blogIdentifier`),
+    UNIQUE INDEX `Blog_blogRoute_key`(`blogRoute`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

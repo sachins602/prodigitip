@@ -10,7 +10,7 @@ export const blogRouter = createTRPCRouter({
     .query(({ input, ctx }) => {
       return ctx.prisma.blog.findUnique({
         where: {
-          id: input.id,
+          blogRoute: input.id,
         },
         include:{
           comments: true,

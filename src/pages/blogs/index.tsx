@@ -27,7 +27,7 @@ function Blogs() {
             </div>
             <div className="mb-6 mt-4">
               <Link
-                href={`/blogs/${blog.id}`}
+                href={`/blogs/${blog.blogRoute}`}
                 className="mb-3 cursor-pointer text-xl font-bold hover:text-blue-400 hover:underline"
               >
                 {blog.title}
