@@ -4,7 +4,7 @@ function Aboutus() {
   return (
     <div className="flex flex-col items-center justify-center gap-10 bg-white p-4 dark:bg-gray-900 lg:flex-row">
       <div className="w-full px-3 md:w-6/12 md:px-4 lg:w-4/12">
-        <div className=" relative mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-pink-500 shadow-lg">
+        <div className=" relative mb-6 flex w-full min-w-0 flex-col break-words rounded-lg bg-gray-700 shadow-lg">
           <img
             alt="..."
             src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80"
