@@ -46,12 +46,12 @@ export const BlogDetails = [
     blogIdentifier: "0",
     author: "Kiran Wagle",
     authorTitle: "Digital Marketing Expert",
-    blogRoute: "how-to-get-more-traffic-to-your-website",
+    blogRoute: "get-more-traffic-to-your-website",
     publishedOn: "2020-10-10",
     authorImage: "/blog-1.png",
     title: "How to get more traffic to your website?",
     paragraph1:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
+      "To get traffice you must wire and produce a lot of relevant content.",
     image1:
       "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
     paragraph2:
