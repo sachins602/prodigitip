@@ -3,14 +3,12 @@ export const NavItems = ["home", "services", "blogs", "contact-us", "about-us"];
 export const ServiceItems = [
   {
     title: "Search Engine Optimization (SEO)",
-    description:
-      "We help you to rank your website on the first page of Google.",
+    description: "We help you to rank your website on the first page of Google.",
     image: "/seo.png",
   },
   {
     title: "Social Media Marketing (SMM)",
-    description:
-      "We help you to rank your website on the first page of Google.",
+    description: "We help you to rank your website on the first page of Google.",
     image: "/smm.png",
   },
   {
@@ -50,30 +48,18 @@ export const BlogDetails = [
     publishedOn: "2020-10-10",
     authorImage: "/blog-1.png",
     title: "How to get more traffic to your website?",
-    paragraph1:
-      "To get traffice you must wire and produce a lot of relevant content. ",
-    image1:
-      "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    paragraph2:
-      "To get traffice you must wire and produce a lot of relevant content.",
-    paragraph3:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
-    paragraph4:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
-    paragraph5:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
-    image2:
-      "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    paragraph6:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
-    paragraph7:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
-    paragraph8:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
-    image3:
-      "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    paragraph9:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem. Sed euismod, nunc vel tincidunt lacinia, nisl nisl aliquam mauris, eget aliquet nisl nunc eget lorem.",
+    paragraph1: "To get traffice you must wire and produce a lot of relevant content.",
+    image1: "https://drive.google.com/file/d/1F5xIFenq8WzIAW3Zb1BnnDd_F6Uq1_VC/view?usp=sharing",
+    paragraph2: "To get traffice you must wire and produce a lot of relevant content.",
+    paragraph3: "Lorem ipsum ...",
+    paragraph4: "Lorem ipsum ...",
+    paragraph5: "Lorem ipsum ...",
+    image2: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+    paragraph6: "Lorem ipsum ...",
+    paragraph7: "Lorem ipsum ...",
+    paragraph8: "Lorem ipsum ...",
+    image3: "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+    paragraph9: "Lorem ipsum ...",
   },
-
+  // Add more blog entries here as needed...
 ];
