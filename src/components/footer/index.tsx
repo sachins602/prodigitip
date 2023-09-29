@@ -8,10 +8,10 @@ function Footer() {
         <div className="mb-6 md:mb-0">
           <Link href="/" className="flex items-center">
             <Image
-              width={192}
+              width={112}
               height={48}
               src="/icon.png"
-              className="h-12 w-48 rounded-md bg-slate-200"
+              className="h-12 w-28 rounded-md bg-slate-200"
               alt="Prodigitips Logo"
             />
           </Link>
